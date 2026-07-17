@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeYourStep — Ngatur Duit Tanpa Drama</title>
+<meta name="description" content="SafeYourStep bantu kamu ngatur duit lewat Smart Financial Dashboard, WA Bot, dan Channel WA. Gak ribet, gak bikin insecure.">
+<meta name="theme-color" content="#5B1A2E">
+
+<!-- Open Graph / pratinjau saat link dibagikan ke WhatsApp, Instagram, dll -->
+<meta property="og:title" content="SafeYourStep — Ngatur Duit Tanpa Drama">
+<meta property="og:description" content="Smart Financial Dashboard, WA Bot, dan Channel WA yang bantu kamu ngatur duit tanpa bikin insecure.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="id_ID">
+<meta property="og:image" content="assets/logo.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF1E1;
+    --maroon:#5B1A2E;
+    --pink:#F6C9DA;
+    --sage:#8FB88A;
+    --sky:#BFE1EC;
+    --coral:#F2765C;
+    --mustard:#F2C14E;
+    --ink:#2B1620;
+    --white:#FFFDF8;
+    --shadow:5px 5px 0px var(--ink);
+    --shadow-sm:3px 3px 0px var(--ink);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.5;}
+  h1,h2,h3,.display{font-family:'Fraunces',serif;font-weight:600;color:var(--ink);margin:0;line-height:1.08;}
+  .hand{font-family:'Caveat',cursive;font-weight:700;}
+  .mono{font-family:'Space Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  .dotbg{background-image:radial-gradient(circle, rgba(43,22,32,.14) 1.5px, transparent 1.5px);background-size:22px 22px;}
+
+  .marquee{
+    background:var(--mustard);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:700;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;
+    padding:8px 0;text-align:center;border-bottom:2.5px solid var(--ink);
+  }
+
+  .btn{
+    font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;border-radius:999px;
+    padding:14px 28px;border:2.5px solid var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+    box-shadow:var(--shadow-sm);transition:transform .15s ease, box-shadow .15s ease;background:var(--white);color:var(--ink);
+  }
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0px var(--ink);}
+  .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0px var(--ink);}
+  .btn:focus-visible{outline:3px solid var(--maroon);outline-offset:2px;}
+  .btn-coral{background:var(--coral);color:var(--white);}
+  .btn-maroon{background:var(--maroon);color:var(--white);}
+  .btn-mustard{background:var(--mustard);color:var(--ink);}
+
+  .ribbon{
+    font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+    padding:9px 26px;display:inline-flex;align-items:center;gap:6px;
+    clip-path:polygon(0% 0%, 100% 0%, 92% 50%, 100% 100%, 0% 100%, 8% 50%);
+    border:2px solid var(--ink);
+  }
+
+  header{position:sticky;top:0;z-index:50;background:var(--cream);border-bottom:2.5px solid var(--ink);}
+  nav{max-width:1180px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Fraunces',serif;font-weight:700;font-size:24px;color:var(--ink);display:flex;align-items:center;gap:8px;}
+  .logo .blob{width:13px;height:13px;border-radius:50%;background:var(--coral);border:2px solid var(--ink);}
+  .logo-full{height:52px;width:auto;display:block;}
+  .logo-full.footer-logo{height:68px;}
+  .nav-links{display:flex;gap:28px;font-size:14.5px;font-weight:700;}
+  .nav-links a{padding:4px 0;border-bottom:2.5px solid transparent;}
+  .nav-links a:hover{border-color:var(--coral);}
+  .nav-cta{display:flex;gap:12px;}
+  .nav-toggle{display:none;background:none;border:2.5px solid var(--ink);border-radius:10px;padding:8px 10px;font-size:18px;box-shadow:var(--shadow-sm);}
+  .mobile-menu{display:none;flex-direction:column;gap:4px;padding:8px 32px 20px;background:var(--cream);border-top:2.5px solid var(--ink);}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:12px 4px;font-size:15px;font-weight:700;border-bottom:1.5px dashed var(--ink);}
+  .mobile-menu .btn{justify-content:center;margin-top:8px;}
+  @media(max-width:900px){.nav-links,.nav-cta{display:none;}.nav-toggle{display:block;}}
+
+  section{padding:100px 0;position:relative;}
+
+  .hero{padding:56px 0 90px;overflow:hidden;position:relative;}
+  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+  @media(max-width:960px){.hero .wrap{grid-template-columns:1fr;}}
+  .hero-ambient{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .hero-ambient .float-item{
+    position:absolute;opacity:.5;line-height:1;
+    animation:floatDrift var(--dur,8s) ease-in-out infinite;
+    animation-delay:var(--delay,0s);
+    filter:drop-shadow(2px 3px 0 rgba(43,22,32,.18));
+  }
+  @keyframes floatDrift{
+    0%,100%{transform:translateY(0) rotate(-6deg);}
+    50%{transform:translateY(-24px) rotate(9deg);}
+  }
+  @media(prefers-reduced-motion: reduce){
+    .hero-ambient .float-item, .sticker{animation:none;}
+  }
+  .hero h1{font-size:clamp(36px,5.2vw,58px);}
+  .hero h1 .script{font-family:'Caveat',cursive;font-weight:700;color:var(--coral);font-size:1.25em;}
+  .hero p.lead{font-size:17.5px;max-width:460px;margin-top:22px;font-weight:500;}
+  .hero-cta-row{display:flex;align-items:center;gap:18px;margin-top:36px;flex-wrap:wrap;}
+  .doodle-arrow{width:90px;opacity:.85;}
+  .sticker{position:absolute;filter:drop-shadow(2px 3px 0 rgba(43,22,32,.25));animation:floatDrift 7.5s ease-in-out infinite;}
+  .stamp{
+    width:86px;height:86px;border-radius:50%;background:var(--white);border:2.5px dashed var(--ink);
+    display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:var(--shadow-sm);
+  }
+
+  /* PHONE MOCKUP */
+  .phone{
+    background:var(--ink);border-radius:34px;padding:12px;box-shadow:var(--shadow);
+    max-width:300px;margin:0 auto;position:relative;
+  }
+  .phone-notch{
+    position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    width:80px;height:18px;background:var(--ink);border-radius:0 0 12px 12px;z-index:2;
+  }
+  .phone-screen{
+    background:var(--pink);border-radius:24px;padding:34px 14px 18px;min-height:360px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .chat-bubble{background:var(--white);border:2px solid var(--ink);border-radius:14px;padding:10px 14px;font-size:13px;font-weight:600;max-width:82%;}
+  .chat-bubble.me{align-self:flex-end;background:var(--mustard);}
+  .chat-bubble.bot{align-self:flex-start;}
+
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head h2{font-size:clamp(28px,3.6vw,42px);margin-top:14px;}
+  .section-head p{margin-top:14px;font-size:16.5px;font-weight:500;}
+
+  .scallop-strip{height:26px;width:100%;background:radial-gradient(circle at 13px 0, transparent 13px, var(--_c) 13.5px) 0 0/26px 26px repeat-x;}
+  .scallop-strip.bottom{background:radial-gradient(circle at 13px 26px, transparent 13px, var(--_c) 13.5px) 0 0/26px 26px repeat-x;}
+
+  .checker{height:20px;background-image:conic-gradient(var(--_a) 90deg, var(--_b) 90deg 180deg, var(--_a) 180deg 270deg, var(--_b) 270deg);background-size:20px 20px;border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);}
+
+  /* PILLAR CARDS - scallop shape kecil */
+  .pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;padding-bottom:20px;}
+  @media(max-width:860px){.pillar-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.pillar-grid{grid-template-columns:1fr;}}
+  .pillar-card{
+    padding:30px 26px;color:var(--ink);
+    clip-path:polygon(0.00% 0.00%, 4.17% 0.70%, 8.33% 1.40%, 12.50% 0.70%, 16.67% 0.00%, 20.83% 0.70%, 25.00% 1.40%, 29.17% 0.70%, 33.33% 0.00%, 37.50% 0.70%, 41.67% 1.40%, 45.83% 0.70%, 50.00% 0.00%, 54.17% 0.70%, 58.33% 1.40%, 62.50% 0.70%, 66.67% 0.00%, 70.83% 0.70%, 75.00% 1.40%, 79.17% 0.70%, 83.33% 0.00%, 87.50% 0.70%, 91.67% 1.40%, 95.83% 0.70%, 100.00% 0.00%, 99.30% 6.25%, 98.60% 12.50%, 99.30% 18.75%, 100.00% 25.00%, 99.30% 31.25%, 98.60% 37.50%, 99.30% 43.75%, 100.00% 50.00%, 99.30% 56.25%, 98.60% 62.50%, 99.30% 68.75%, 100.00% 75.00%, 99.30% 81.25%, 98.60% 87.50%, 99.30% 93.75%, 100.00% 100.00%, 95.83% 99.30%, 91.67% 98.60%, 87.50% 99.30%, 83.33% 100.00%, 79.17% 99.30%, 75.00% 98.60%, 70.83% 99.30%, 66.67% 100.00%, 62.50% 99.30%, 58.33% 98.60%, 54.17% 99.30%, 50.00% 100.00%, 45.83% 99.30%, 41.67% 98.60%, 37.50% 99.30%, 33.33% 100.00%, 29.17% 99.30%, 25.00% 98.60%, 20.83% 99.30%, 16.67% 100.00%, 12.50% 99.30%, 8.33% 98.60%, 4.17% 99.30%, 0.00% 100.00%, 0.70% 93.75%, 1.40% 87.50%, 0.70% 81.25%, 0.00% 75.00%, 0.70% 68.75%, 1.40% 62.50%, 0.70% 56.25%, 0.00% 50.00%, 0.70% 43.75%, 1.40% 37.50%, 0.70% 31.25%, 0.00% 25.00%, 0.70% 18.75%, 1.40% 12.50%, 0.70% 6.25%, 0.00% 0.00%);
+  }
+  .pillar-emoji{font-size:32px;}
+  .pillar-title{font-family:'Fraunces',serif;font-weight:700;font-size:19px;margin-top:10px;}
+  .pillar-desc{font-size:14px;margin-top:8px;font-weight:500;}
+
+  /* STEP CARDS */
+  .steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  @media(max-width:900px){.steps-row{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.steps-row{grid-template-columns:1fr;}}
+  .step-card{background:var(--white);border:2.5px solid var(--ink);border-radius:20px;padding:24px;box-shadow:var(--shadow);}
+  .step-num{
+    font-family:'Fraunces',serif;font-weight:700;font-size:20px;width:48px;height:48px;border-radius:50%;
+    border:2.5px dashed var(--ink);display:flex;align-items:center;justify-content:center;margin-bottom:14px;
+  }
+  .step-card h3{font-size:17.5px;margin-bottom:8px;font-weight:700;}
+  .step-card p{font-size:14px;font-weight:500;margin:0;}
+
+  /* PRODUK CARDS - scallop besar dgn badge sticker */
+  .polaroid-row{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;padding:16px 0 40px;}
+  @media(max-width:900px){.polaroid-row{grid-template-columns:1fr;max-width:360px;margin:0 auto;}}
+  .polaroid{background:var(--white);border:2.5px solid var(--ink);border-radius:8px;padding:16px 16px 22px;box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column;}
+  .polaroid.featured{border-width:3px;box-shadow:7px 7px 0px var(--ink);}
+  .polaroid-photo{height:140px;border:2px solid var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:52px;}
+  .polaroid-caption{padding-top:14px;display:flex;flex-direction:column;flex:1;}
+  .polaroid-title{font-family:'Fraunces',serif;font-weight:700;font-size:19px;line-height:1.15;}
+  .polaroid-caption p{font-size:13.5px;font-weight:500;margin-top:8px;}
+  .badge-corner{
+    position:absolute;top:-18px;right:-14px;transform:rotate(10deg);
+  }
+  .featured-flag{
+    position:absolute;top:14px;left:-10px;background:var(--mustard);color:var(--ink);
+    font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;
+    padding:5px 12px;border:2px solid var(--ink);border-radius:999px;box-shadow:var(--shadow-sm);
+    transform:rotate(-6deg);
+  }
+  .feat-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:7px;flex:1;}
+  .feat-list li{font-size:13px;font-weight:600;padding-left:20px;position:relative;}
+  .feat-list li::before{content:"✓";position:absolute;left:0;top:0;color:var(--coral);font-weight:800;}
+
+  /* DASHBOARD PREVIEW - dark card style */
+  .darkcard{
+    background:var(--cream);border-radius:20px;padding:28px;max-width:700px;margin:0 auto;
+    border:2.5px solid var(--ink);box-shadow:8px 8px 0 rgba(0,0,0,.25);
+  }
+  .kpi-row{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;}
+  .kpi-pill{border:2px solid var(--ink);border-radius:16px;padding:14px 18px;flex:1;min-width:120px;}
+  .kpi-label{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;}
+  .kpi-val{font-family:'Fraunces',serif;font-weight:700;font-size:24px;margin-top:6px;}
+  .kpi-sub{font-size:11.5px;font-weight:700;margin-top:2px;}
+
+  /* STICKY NOTES */
+  .note-row{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  @media(max-width:860px){.note-row{grid-template-columns:1fr;max-width:360px;margin:0 auto;}}
+  .sticky-note{border:2.5px solid var(--ink);border-radius:6px;padding:26px 22px;box-shadow:var(--shadow);position:relative;}
+  .pin{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:22px;}
+  .sticky-note p{margin:0;}
+  .sticky-note p.hand{margin-bottom:6px;font-size:24px;}
+  .sticky-note p:not(.hand){font-size:14px;font-weight:500;}
+
+  /* TESTIMONIAL */
+  .testi-quote{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(22px,3vw,32px);max-width:720px;margin:0 auto;text-align:center;font-style:italic;}
+  .testi-arrow{width:44px;height:44px;border:2.5px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--white);}
+
+  footer a:hover{text-decoration:underline;}
+
+  /* REVEAL ON SCROLL */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.on{opacity:1;transform:translateY(0);}
+  @media(prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="marquee">✨ DIBUAT BUAT KAMU YANG BARU MULAI MELEK FINANSIAL ✨ GAK RIBET, GAK BIKIN INSECURE ✨</div>
+
+<header>
+  <nav>
+    <a href="#" class="logo"><img src="assets/logo.png" alt="SafeYourStep" class="logo-full"></a>
+    <div class="nav-links">
+      <a href="#kenalan">Kenalan</a>
+      <a href="#caranya">Caranya</a>
+      <a href="#produk">Produk</a>
+      <a href="#komunitas">Komunitas</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn" href="#produk" style="padding:10px 20px;font-size:13.5px;">Liat Produk</a>
+      <a class="btn btn-maroon" href="#komunitas" style="padding:10px 20px;font-size:13.5px;">Gabung</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#kenalan">Kenalan</a>
+    <a href="#caranya">Caranya</a>
+    <a href="#produk">Produk</a>
+    <a href="#komunitas">Komunitas</a>
+    <a class="btn btn-coral" href="#produk">Liat Produk</a>
+    <a class="btn btn-maroon" href="#komunitas">Gabung</a>
+  </div>
+</header>
+
+<section class="hero dotbg">
+  <div class="hero-ambient" aria-hidden="true">
+    <span class="float-item" style="left:5%; top:12%; --dur:7s; --delay:0s; font-size:26px;">🪙</span>
+    <span class="float-item" style="left:13%; top:72%; --dur:9s; --delay:1.2s; font-size:22px;">✨</span>
+    <span class="float-item" style="left:47%; top:6%; --dur:8s; --delay:.6s; font-size:24px;">💵</span>
+    <span class="float-item" style="left:72%; top:58%; --dur:10s; --delay:2s; font-size:20px;">🍬</span>
+    <span class="float-item" style="left:88%; top:18%; --dur:7.5s; --delay:1.6s; font-size:26px;">🪙</span>
+    <span class="float-item" style="left:33%; top:88%; --dur:9.5s; --delay:.3s; font-size:22px;">✨</span>
+    <span class="float-item" style="left:60%; top:32%; --dur:8.5s; --delay:2.4s; font-size:20px;">💸</span>
+  </div>
+  <div class="wrap">
+    <div style="position:relative;">
+      <span class="ribbon" style="background:var(--mustard);">✨ gak cuma nyatet duit</span>
+      <h1 style="margin-top:24px;">Duitmu berantakan?<br>Yuk <span class="script">beresin bareng!</span></h1>
+      <p class="lead">SafeYourStep bantu kamu ngatur duit tanpa bikin pusing — ada worksheet yang ngitung otomatis, bot WA yang bisa diajak curhat soal belanja, sampai channel isinya tips receh tapi kepake.</p>
+      <div class="hero-cta-row">
+        <a class="btn btn-coral" href="#produk">Cek Kondisi Dompetmu →</a>
+        <svg class="doodle-arrow" viewBox="0 0 100 60" fill="none"><path d="M5 10 Q 40 55 90 20" stroke="#2B1620" stroke-width="2.5" stroke-linecap="round"/><path d="M75 15 L 92 20 L 82 34" stroke="#2B1620" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="sticker" style="bottom:-30px;left:40px;font-size:28px;transform:rotate(-6deg);">🍬</div>
+    </div>
+
+    <div style="position:relative;">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="chat-bubble bot">halo! aku bantu cek kondisi keuanganmu dulu ya 👀</div>
+          <div class="chat-bubble me">aku mau beli sepatu 900rb boleh gak?</div>
+          <div class="chat-bubble bot">🟡 bisa, tapi budget jajanmu bulan ini abis 70%-nya lho</div>
+        </div>
+      </div>
+      <div class="stamp sticker" style="top:-10px;right:-10px;transform:rotate(10deg);">💰</div>
+      <div class="sticker" style="bottom:30px;left:-30px;font-size:30px;transform:rotate(-10deg);">✨</div>
+      <div class="sticker" style="top:120px;left:-40px;font-size:26px;transform:rotate(14deg);">🪙</div>
+    </div>
+  </div>
+</section>
+
+<div class="checker" style="--_a:var(--cream);--_b:var(--mustard);"></div>
+
+<section id="kenalan" style="background:var(--maroon);color:var(--white);padding-top:70px;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="ribbon" style="background:var(--pink);color:var(--ink);">📌 real talk</span>
+      <h2 style="color:var(--white);margin-top:18px;">5 hal yang nentuin sehat<br>nggaknya keuanganmu.</h2>
+      <p style="color:#EBD9DF;">Sebelum ngomongin investasi atau nabung buat liburan, cek dulu 5 hal dasar ini. Ini juga yang otomatis dihitungin di Smart Financial Dashboard kita.</p>
+    </div>
+    <div class="pillar-grid">
+      <div class="pillar-card reveal" style="background:var(--pink);transform:rotate(-1.5deg);">
+        <div class="pillar-emoji">💵</div>
+        <div class="pillar-title">Arus Kas</div>
+        <div class="pillar-desc">Duit masuk vs keluar tiap bulan. Sering minus? Nah, ini biang keroknya.</div>
+      </div>
+      <div class="pillar-card reveal" style="background:var(--mustard);transform:rotate(1.5deg);">
+        <div class="pillar-emoji">💳</div>
+        <div class="pillar-title">Rasio Utang</div>
+        <div class="pillar-desc">Cicilan dibanding gaji. Lewat 36%? Red flag, arus kasmu bakal kecekik.</div>
+      </div>
+      <div class="pillar-card reveal" style="background:var(--sky);transform:rotate(-1deg);">
+        <div class="pillar-emoji">🛟</div>
+        <div class="pillar-title">Dana Darurat</div>
+        <div class="pillar-desc">Kalau gajian tiba-tiba berhenti, tabunganmu nutup hidup berapa lama?</div>
+      </div>
+      <div class="pillar-card reveal" style="background:var(--sage);transform:rotate(1deg);">
+        <div class="pillar-emoji">🧾</div>
+        <div class="pillar-title">Alokasi Anggaran</div>
+        <div class="pillar-desc">Ke mana aja duitmu pergi beneran — bukan feeling, tapi angka asli.</div>
+      </div>
+      <div class="pillar-card reveal" style="background:var(--white);transform:rotate(-1deg);">
+        <div class="pillar-emoji">🏦</div>
+        <div class="pillar-title">Tingkat Tabungan</div>
+        <div class="pillar-desc">Berapa persen gajimu yang beneran nyisa buat masa depan, bukan cuma lewat doang.</div>
+      </div>
+      <div class="pillar-card reveal" style="background:var(--coral);color:var(--white);transform:rotate(-1.5deg);">
+        <div class="pillar-emoji">🏆</div>
+        <div class="pillar-title">Skor Kesehatan</div>
+        <div class="pillar-desc">1 angka gabungan dari semuanya. Biar kamu gak perlu jadi ahli keuangan buat paham posisimu.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="caranya" class="dotbg">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="ribbon" style="background:var(--sky);">🎯 caranya</span>
+      <h2 style="margin-top:18px;">Cara kerjanya, beneran<br>gampang kok.</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step-card reveal">
+        <div class="step-num" style="background:var(--pink);">01</div>
+        <h3>Kenalan sama dompetmu</h3>
+        <p>Jujur-jujuran soal angka: gaji, pengeluaran, utang. Gak perlu sempurna, yang penting mulai dicatat.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num" style="background:var(--mustard);">02</div>
+        <h3>Pantau lewat dashboard</h3>
+        <p>Isi data bulananmu, dashboard-nya yang ngitung otomatis: arus kas, utang, dana darurat, sampai skor kesehatan.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num" style="background:var(--sky);">03</div>
+        <h3>Curhat ke WA Bot</h3>
+        <p>Bingung mau beli sesuatu? Tinggal chat, bot-nya bantu hitung dampaknya ke budgetmu.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num" style="background:var(--sage);">04</div>
+        <h3>Gas bareng Channel WA</h3>
+        <p>Tips singkat, studi kasus receh, reminder rutin — tanpa notif berisik, tanpa grup rame.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="produk" style="background:var(--pink);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="ribbon" style="background:var(--white);">🛍️ produk kita</span>
+      <h2 style="margin-top:18px;">3 cara kita bantu kamu<br>gerak, bukan cuma tau.</h2>
+    </div>
+    <div class="polaroid-row">
+      <div class="polaroid featured reveal" style="transform:rotate(-2.5deg);">
+        <span class="featured-flag">⭐ produk utama</span>
+        <div class="badge-corner"><div class="stamp" style="background:var(--mustard);">📊</div></div>
+        <div class="polaroid-photo" style="background:var(--sky);">📈</div>
+        <div class="polaroid-caption">
+          <div class="polaroid-title">Smart Financial<br>Dashboard</div>
+          <p>Worksheet Excel yang ngitung semuanya otomatis. Isi data, langsung keliatan sehat apa nggaknya keuanganmu.</p>
+          <ul class="feat-list">
+            <li>Arus kas, utang, dana darurat, tabungan, skor kesehatan</li>
+            <li>Tinggal pilih bulan, seluruh dashboard ikut ke-update</li>
+            <li>Target & bobot skor bisa diatur sesuai kebutuhanmu</li>
+          </ul>
+          <a class="btn btn-maroon" style="width:100%;justify-content:center;margin-top:14px;" href="https://1drv.ms/x/c/c0db7c51366b00f6/IQCywKZJU7ZKTb83opfANkcwAdFYYJzMWRx_iPrf2wi0dcU?e=Ni72TS" target="_blank" rel="noopener">Ambil Worksheet-nya</a>
+        </div>
+      </div>
+      <div class="polaroid reveal" style="transform:rotate(2deg);">
+        <div class="badge-corner"><div class="stamp" style="background:var(--sage);">💬</div></div>
+        <div class="polaroid-photo" style="background:var(--coral);">💬</div>
+        <div class="polaroid-caption">
+          <div class="polaroid-title">WA Bot<br>SafeYourStep</div>
+          <p>Asisten keuangan pribadi di WhatsApp. Bisa diajak curhat mau beli apa, ngingetin budget harian juga.</p>
+          <ul class="feat-list">
+            <li>Pengingat catat pengeluaran & bayar cicilan</li>
+            <li>Hitung cepat dampak belanja ke budgetmu</li>
+            <li>Bisa diajak tanya jawab dasar soal keuangan</li>
+          </ul>
+          <a class="btn btn-maroon" style="width:100%;justify-content:center;margin-top:14px;" href="https://wa.me/6281331906802" target="_blank" rel="noopener">Chat Sekarang</a>
+        </div>
+      </div>
+      <div class="polaroid reveal" style="transform:rotate(-1.5deg);">
+        <div class="badge-corner"><div class="stamp" style="background:var(--sky);">📣</div></div>
+        <div class="polaroid-photo" style="background:var(--mustard);">📣</div>
+        <div class="polaroid-caption">
+          <div class="polaroid-title">Channel WA<br>SafeYourStep</div>
+          <p>Broadcast santai — tips, studi kasus, reminder. Gratis, gak spam, gak maksa.</p>
+          <ul class="feat-list">
+            <li>Bahasan singkat, gampang dicerna</li>
+            <li>Update rutin, bukan spam harian</li>
+            <li>Gratis buat siapa aja yang mau ikutan</li>
+          </ul>
+          <a class="btn btn-maroon" style="width:100%;justify-content:center;margin-top:14px;" href="https://whatsapp.com/channel/0029VbDEJ7y05MUoMiRb9t3A" target="_blank" rel="noopener">Gabung Channel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scallop-strip" style="--_c:var(--maroon);"></div>
+<section style="background:var(--maroon);color:var(--white);padding-top:64px;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="ribbon" style="background:var(--mustard);">👀 sneak peek</span>
+      <h2 style="color:var(--white);margin-top:18px;">Beginilah tampilan dashboard-mu nanti.</h2>
+      <p style="color:#EBD9DF;">Preview buat bulan ini — semua angka di bawah keitung otomatis, gak perlu kalkulator manual.</p>
+    </div>
+    <div class="darkcard reveal">
+      <div class="mono" style="font-size:12px;color:var(--coral);font-weight:700;">BULAN: DESEMBER</div>
+      <div class="kpi-row">
+        <div class="kpi-pill" style="background:var(--pink);"><div class="kpi-label">Arus Kas</div><div class="kpi-val">Rp5.6jt</div><div class="kpi-sub">✅ surplus</div></div>
+        <div class="kpi-pill" style="background:var(--sky);"><div class="kpi-label">Utang</div><div class="kpi-val">9.4%</div><div class="kpi-sub">✅ sehat</div></div>
+        <div class="kpi-pill" style="background:var(--mustard);"><div class="kpi-label">Darurat</div><div class="kpi-val">3.0 bln</div><div class="kpi-sub">⚠️ kurang</div></div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-pill" style="background:var(--coral);color:var(--white);"><div class="kpi-label">Tabungan</div><div class="kpi-val">7.1%</div><div class="kpi-sub">⚠️ rendah</div></div>
+        <div class="kpi-pill" style="background:var(--sage);color:var(--white);"><div class="kpi-label">Skor</div><div class="kpi-val">65/100</div><div class="kpi-sub">🙂 sehat</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="scallop-strip bottom" style="--_c:var(--maroon);"></div>
+
+<section style="background:var(--white);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="ribbon" style="background:var(--sage);color:var(--white);">🫶 buat siapa</span>
+      <h2 style="margin-top:18px;">SafeYourStep tuh buat kamu yang...</h2>
+    </div>
+    <div class="note-row">
+      <div class="sticky-note reveal" style="background:var(--mustard);transform:rotate(-2deg);">
+        <div class="pin">📌</div>
+        <p class="hand">baru gajian pertama</p>
+        <p>pengen biasain nyatet dari awal, tanpa ribet pake app yang rumit-rumit.</p>
+      </div>
+      <div class="sticky-note reveal" style="background:var(--sky);transform:rotate(2deg);">
+        <div class="pin">📌</div>
+        <p class="hand">lagi nyicil sesuatu</p>
+        <p>butuh tau seberapa berat cicilanmu dibanding gaji, biar gak asal jalan.</p>
+      </div>
+      <div class="sticky-note reveal" style="background:var(--pink);transform:rotate(-1deg);">
+        <div class="pin">📌</div>
+        <p class="hand">mau punya dana darurat</p>
+        <p>pengen tau persis udah nutup berapa bulan, target berapa bulan lagi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--coral);color:var(--white);">
+  <div class="wrap" style="text-align:center;position:relative;">
+    <div class="sticker" style="top:16px;left:6%;font-size:30px;transform:rotate(-10deg);">🎉</div>
+    <div class="sticker" style="top:40px;right:8%;font-size:26px;transform:rotate(10deg);">💌</div>
+    <span class="ribbon" style="background:var(--white);color:var(--ink);">💬 katanya gimana</span>
+    <p class="testi-quote reveal" style="margin-top:28px;color:var(--white);">"Awalnya kirain bakal ribet kayak app keuangan lain. Ternyata tinggal chat doang, langsung ngerti duitku kemana aja."</p>
+    <p style="margin-top:16px;font-weight:700;">— pengguna SafeYourStep</p>
+    <div style="display:flex;justify-content:center;gap:16px;margin-top:26px;">
+      <div class="testi-arrow">←</div>
+      <div class="testi-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<div class="scallop-strip" style="--_c:var(--sage);"></div>
+<section id="komunitas" style="background:var(--sage);color:var(--white);text-align:center;">
+  <div class="wrap">
+    <h2 class="reveal" style="color:var(--white);font-size:clamp(28px,4vw,44px);">Gas mulai langkah pertamamu<br>hari ini. Gratis kok.</h2>
+    <p style="margin-top:16px;font-size:17px;color:#F1F7EF;">Gabung channel buat update rutin, atau langsung chat bot-nya kalau lagi bingung soal duit.</p>
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:32px;flex-wrap:wrap;">
+      <a class="btn btn-mustard" href="https://whatsapp.com/channel/0029VbDEJ7y05MUoMiRb9t3A" target="_blank" rel="noopener">Gabung Channel WA</a>
+      <a class="btn" style="background:var(--white);" href="https://wa.me/6281331906802" target="_blank" rel="noopener">Chat WA Bot</a>
+    </div>
+  </div>
+</section>
+<div class="scallop-strip bottom" style="--_c:var(--sage);"></div>
+
+<footer style="background:var(--ink);color:#D9C9CF;padding:56px 0 28px;">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+      <div style="max-width:280px;">
+        <div class="logo" style="color:var(--white);"><img src="assets/logo-white.png" alt="SafeYourStep" class="logo-full footer-logo"></div>
+        <p style="font-size:14px;margin-top:14px;">Temen ngatur duit yang gak sok tau dan gak bikin insecure.</p>
+      </div>
+      <div style="display:flex;gap:56px;flex-wrap:wrap;">
+        <div>
+          <div style="color:var(--white);font-weight:700;margin-bottom:12px;">Jelajahi</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+            <a href="#kenalan">Kenalan</a><a href="#caranya">Caranya</a><a href="#produk">Produk</a>
+          </div>
+        </div>
+        <div>
+          <div style="color:var(--white);font-weight:700;margin-bottom:12px;">Produk</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+            <a href="#produk">Dashboard</a>
+            <a href="https://wa.me/6281331906802" target="_blank" rel="noopener">WA Bot</a>
+            <a href="https://whatsapp.com/channel/0029VbDEJ7y05MUoMiRb9t3A" target="_blank" rel="noopener">Channel WA</a>
+          </div>
+        </div>
+        <div>
+          <div style="color:var(--white);font-weight:700;margin-bottom:12px;">Kontak</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+            <a href="mailto:safeyourstep@gmail.com">safeyourstep@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #45323A;margin-top:40px;padding-top:20px;font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <span>© 2026 SafeYourStep.</span>
+      <span>Dibuat biar bantu, bukan bikin insecure.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
